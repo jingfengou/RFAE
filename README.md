@@ -17,8 +17,35 @@ You can access the experiments conducted in the paper by following [here](https:
 
 
 ## Usage
-> the version information in use: Python 3.8.16, Pytorch 2.0.1, Tensorflow 2.12.0.
-> You can use RFAE to select the key features in the data you put in.We illustrated the specific usage of our method using the MNIST dataset as an example. You can find the details [here](https://github.com/jingfengou/RFAE/tree/main/Examples).
+The version information in use: Python 3.8.16, Pytorch 2.0.1, Tensorflow 2.12.0.
+
+You can use RFAE to select key features from the data you input, where you can set the desired number of features.
+```sh
+p_epochs_number = 1000
+p_batch_size_value = 128
+
+device = get_free_gpu()
+p_key_feature_number = 50
+p_seed = 0
+#   Parameter settings
+
+file_path = "./Data/mnist.npz"      # File path, location to store the data
+datasetname = "MNIST"
+
+
+dataset = np.load(file_path)
+x_train_, y_train_ = dataset['x_train'], dataset['y_train']
+x_test_, y_test_ = dataset['x_test'], dataset['y_test']
+x_data = np.r_[x_train_, x_test_].reshape(70000, 28 * 28).astype('float32') / 255.0
+y_data = np.r_[y_train_, y_test_]
+#    read data
+
+clf = True
+
+clf_feature_list = model.cal(x_data, y_data, datasetname, p_key_feature_number, p_epochs_number, p_batch_size_value, clf, p_seed, device)
+```
+
+We illustrated the specific usage of our method using the MNIST dataset as an example. You can find the details [here](https://github.com/jingfengou/RFAE/tree/main/Examples).
 
 
 ## Release History
